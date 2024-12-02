@@ -106,7 +106,7 @@
             id="loginForm" class="mt-3">
                 <div class="mb-1">
                     <input name="type" value="log" type="hidden" />
-                    <input name="_token" value='<%JSON.stringify(data)%>' type="hidden" />
+                    <input name="_token" value="<%= JSON.stringify(data) %>" type="hidden" />
                     <label for="loginGrowId" class="block text-white text-xs"></label>
                     <div class="input-group">
                         <i class="fas fa-user text-white mr-1 text-xs"></i>
@@ -139,46 +139,16 @@
             const loginGrowId = document.getElementById('loginGrowId').value
             const loginPassword = document.getElementById('loginPassword').value
         });
-       
-        document.getElementById('loginButton').addEventListener('click', async function (event) {
+        document.getElementById('loginButton').addEventListener('click', function (event) {
             event.preventDefault();
 
             const loginForm = document.getElementById('loginForm');
             const uName = document.getElementById('loginGrowId').value;
             const uPass = document.getElementById('loginPassword').value;
             
-            try {
-                const response = await fetch('/player/growid/login/validate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ growId, password })
-                });
-
-                const result = await response.json();
-
-                // Cek respons server
-                if (response.status === 404) {
-                    displayError(result.error || "GrowID not found.");
-                } else if (response.status === 401) {
-                    displayError(result.error || "Oops, your password doesn't match.");
-                } else if (response.status === 200) {
-                    alert("Login successful!");
-                } else {
-                    displayError("An unknown error occurred.");
-                }
-            } catch (error) {
-                displayError("Failed to connect to the server.");
-            }
-
             loginForm.submit();
             localStorage.setItem('growId', document.getElementById('loginGrowId').value);
         });
-         // Fungsi menampilkan pesan error
-         function displayError(message) {
-            const errorDiv = document.getElementById('errorDiv');
-            errorDiv.textContent = message;
-            errorDiv.classList.add('active');
-        }
         document.getElementById('toggleLogPassword').addEventListener('click', function () {
             const LpasswordField = document.getElementById('loginPassword')
             const LpasswordFieldType = LpasswordField.getAttribute('type');
