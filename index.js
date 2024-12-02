@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const rateLimiter = require('express-rate-limit');
 const compression = require('compression');
 const os = require('os');
-
+const fs = require('fs');
 
 app.use(compression({
     level: 5,
